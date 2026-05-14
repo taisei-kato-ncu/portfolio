@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>加藤大聖 | Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; line-height: 1.7; }
+
+    header {
+      background: #1a1a2e;
+      color: #fff;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    header h1 { font-size: 2.8rem; letter-spacing: 0.1em; }
+    header p { margin-top: 10px; font-size: 1.1rem; color: #aaa; }
+
+    nav {
+      background: #16213e;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav a { color: #ccc; text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
+    nav a:hover { color: #fff; }
+
+    section { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+    section h2 { font-size: 1.6rem; border-left: 4px solid #1a1a2e; padding-left: 12px; margin-bottom: 20px; }
+
+    .about p { font-size: 1rem; color: #555; }
+
+    .skills ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+    .skills li {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+    .card p { font-size: 0.9rem; color: #666; }
+
+    footer {
+      background: #1a1a2e;
+      color: #aaa;
+      text-align: center;
+      padding: 30px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>加藤 大聖</h1>
+  <p>名古屋市立大学 経済学部 | 河合勝彦ゼミ</p>
+</header>
+
+<nav>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#works">Works</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="about" class="about">
+  <h2>About Me</h2>
+  <p>
+    名古屋市立大学経済学部に在籍し、河合勝彦ゼミで経済学を研究しています。
+    <!-- 自己紹介文をここに追加してください -->
+    興味のある分野や将来の目標などを記載してください。
+  </p>
+</section>
+
+<section id="skills" class="skills">
+  <h2>Skills</h2>
+  <ul>
+    <li>経済学</li>
+    <li>データ分析</li>
+    <li>Excel / スプレッドシート</li>
+    <!-- スキルを追加してください -->
+  </ul>
+</section>
+
+<section id="works">
+  <h2>Works</h2>
+  <div class="card">
+    <h3>ゼミ研究</h3>
+    <p>河合勝彦ゼミでの研究内容をここに記載してください。</p>
+  </div>
+  <div class="card">
+    <h3>プロジェクト / インターン</h3>
+    <p>経験したプロジェクトやインターンシップをここに記載してください。</p>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
+  <!-- SNSリンクなどを追加してください -->
+</section>
+
+<footer>
+  <p>&copy; 2026 加藤大聖</p>
+</footer>
+
+</body>
+</html>
