@@ -3,119 +3,917 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>加藤大聖 | Portfolio</title>
+  <title>Portfolio <!-- TODO: 名前を入れる --></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; line-height: 1.7; }
-
-    header {
-      background: #1a1a2e;
-      color: #fff;
-      text-align: center;
-      padding: 80px 20px;
+    :root {
+      --color-bg: #f8fafc;
+      --color-bg2: #ffffff;
+      --color-bg3: #eef2ff;
+      --color-dark: #060d1f;
+      --color-dark2: #0d1a35;
+      --color-primary: #2563eb;
+      --color-accent: #06b6d4;
+      --color-text: #0f172a;
+      --color-text-inv: #e8f0fe;
+      --color-muted: #64748b;
+      --color-muted-inv: #94a3b8;
+      --color-card: #ffffff;
+      --color-border: #e2e8f0;
+      --color-border-dark: #1e3a5f;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
     }
-    header h1 { font-size: 2.8rem; letter-spacing: 0.1em; }
-    header p { margin-top: 10px; font-size: 1.1rem; color: #aaa; }
 
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
     nav {
-      background: #16213e;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      transition: background 0.3s, padding 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(6,13,31,0.95);
+      backdrop-filter: blur(12px);
+      padding: 14px 48px;
+      border-bottom: 1px solid var(--color-border-dark);
+      box-shadow: 0 1px 20px rgba(0,0,0,0.3);
+    }
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--color-primary);
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--color-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--color-primary); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-text);
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.98);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      gap: 30px;
-      padding: 14px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      gap: 36px;
     }
-    nav a { color: #ccc; text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
-    nav a:hover { color: #fff; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--color-primary); }
 
-    section { max-width: 800px; margin: 60px auto; padding: 0 20px; }
-    section h2 { font-size: 1.6rem; border-left: 4px solid #1a1a2e; padding-left: 12px; margin-bottom: 20px; }
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
 
-    .about p { font-size: 1rem; color: #555; }
 
-    .skills ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
-    .skills li {
-      background: #1a1a2e;
-      color: #fff;
-      padding: 6px 16px;
-      border-radius: 20px;
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      background: var(--color-dark);
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(37,99,235,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 200px;
+      background: linear-gradient(to bottom, transparent, var(--color-dark));
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 65%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: left 0.12s ease, top 0.12s ease;
+      will-change: left, top;
+    }
+    .hero-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      max-width: 800px;
+      color: #ffffff;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+    .hero-title em { font-style: normal; color: var(--color-accent); }
+    .hero-sub {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: var(--color-muted-inv);
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+    .hero-cta {
+      margin-top: 40px;
+      display: inline-block;
+      padding: 14px 36px;
+      border: 1px solid var(--color-accent);
+      color: var(--color-accent);
+      font-family: var(--font-heading);
+      font-weight: 600;
       font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background 0.25s, color 0.25s;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.1s forwards;
+    }
+    .hero-cta:hover { background: var(--color-accent); color: var(--color-dark); }
+    .scroll-arrow {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.4s forwards;
+    }
+    .scroll-arrow span {
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--color-primary));
+      animation: scrollLine 1.6s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
+    /* ── SECTIONS COMMON ── */
+    section { padding: 100px 24px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 48px;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--color-bg2); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .about-text p { color: var(--color-muted); margin-bottom: 16px; font-size: 0.97rem; }
+    .about-text p strong { color: var(--color-text); }
+    .about-goal {
+      border-left: 2px solid var(--color-primary);
+      padding-left: 20px;
+      margin-top: 24px;
+      font-size: 0.95rem;
+      color: var(--color-text);
+      font-style: italic;
+    }
+    .about-stats { display: flex; flex-direction: column; gap: 24px; }
+    .stat-item { border-bottom: 1px solid var(--color-border); padding-bottom: 20px; }
+    .stat-num {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1;
+      transition: opacity 0.4s;
+    }
+    .exp-card:nth-child(1) { transition-delay: 0s; }
+    .exp-card:nth-child(2) { transition-delay: 0.12s; }
+    .exp-card:nth-child(3) { transition-delay: 0.24s; }
+    .stat-desc { font-size: 0.85rem; color: var(--color-muted); margin-top: 4px; }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+    /* ── EXPERIENCE ── */
+    #experience {
+      background: var(--color-dark);
+      position: relative;
+      overflow: hidden;
+    }
+    #experience::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .exp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .exp-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--color-border-dark);
+      border-radius: 4px;
+      padding: 32px 28px;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      backdrop-filter: blur(4px);
+    }
+    .exp-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--color-accent);
+      box-shadow: 0 12px 40px rgba(6,182,212,0.1);
+    }
+    .exp-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent);
+      padding: 3px 10px;
+      border-radius: 2px;
       margin-bottom: 16px;
     }
-    .card h3 { font-size: 1.1rem; margin-bottom: 6px; }
-    .card p { font-size: 0.9rem; color: #666; }
+    .exp-card h3 { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: #fff; }
+    .exp-meta { font-size: 0.82rem; color: var(--color-muted-inv); margin-bottom: 14px; }
+    .exp-card p { font-size: 0.88rem; color: var(--color-muted-inv); line-height: 1.65; }
+    .exp-result {
+      margin-top: 16px;
+      padding: 10px 14px;
+      background: rgba(6,182,212,0.07);
+      border-left: 2px solid var(--color-accent);
+      font-size: 0.83rem;
+      color: var(--color-text-inv);
+    }
+    @media (max-width: 1024px) { .exp-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px)  { .exp-grid { grid-template-columns: 1fr; } }
 
-    footer {
-      background: #1a1a2e;
-      color: #aaa;
+
+    /* ── SEMINAR ── */
+    #seminar { background: var(--color-bg3); }
+    .seminar-box {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 40px;
+    }
+    .in-progress {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      background: rgba(0,200,150,0.1);
+      border: 1px solid rgba(0,200,150,0.3);
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .in-progress::before { content: ''; display: block; width: 7px; height: 7px; border-radius: 50%; background: var(--color-primary); animation: pulse 1.4s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+    .seminar-box h3 { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; }
+    .seminar-box p { color: var(--color-muted); font-size: 0.95rem; margin-bottom: 24px; }
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tech-tag {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 2px;
+      background: rgba(0,200,150,0.08);
+      border: 1px solid rgba(0,200,150,0.25);
+      color: var(--color-primary);
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--color-bg2); }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .skills-col h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .skill-item { margin-bottom: 20px; }
+    .skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .skill-name { font-size: 0.9rem; font-weight: 500; }
+    .skill-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 2px;
+    }
+    .badge-strong { background: rgba(0,200,150,0.15); color: var(--color-primary); }
+    .badge-learning { background: rgba(245,166,35,0.15); color: #f5a623; }
+    .badge-beginner { background: rgba(122,128,153,0.2); color: var(--color-muted); }
+    .skill-bar { height: 3px; background: var(--color-border); border-radius: 2px; overflow: hidden; }
+    .skill-fill {
+      height: 100%;
+      background: var(--color-primary);
+      border-radius: 2px;
+      width: 0;
+      transition: width 1.2s ease;
+    }
+    .skill-fill.learning { background: #f5a623; }
+    .skill-fill.beginner { background: var(--color-muted); }
+    @media (max-width: 768px) { .skills-grid { grid-template-columns: 1fr; } }
+
+    /* ── ROADMAP ── */
+    #roadmap {
+      background: var(--color-dark2);
+      position: relative;
+      overflow: hidden;
+    }
+    #roadmap::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .roadmap { display: flex; flex-direction: column; gap: 0; }
+    .roadmap-step { display: flex; gap: 24px; }
+    .roadmap-line { display: flex; flex-direction: column; align-items: center; }
+    .roadmap-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      border: 2px solid var(--color-bg2);
+      box-shadow: 0 0 0 3px rgba(0,200,150,0.2);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .roadmap-dot.future { background: var(--color-border); box-shadow: none; }
+    .roadmap-connector { width: 1px; flex: 1; background: var(--color-border); min-height: 40px; }
+    .roadmap-content { padding-bottom: 40px; }
+    .roadmap-step-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+    .roadmap-step-label.future { color: var(--color-muted); }
+    .roadmap-content h3 { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .roadmap-content p { font-size: 0.88rem; color: var(--color-muted); }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--color-dark);
       text-align: center;
-      padding: 30px;
-      font-size: 0.85rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #contact::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(6,182,212,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .contact-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 16px; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border: 1px solid var(--color-border-dark);
+      border-radius: 2px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-muted-inv);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .contact-link:hover { border-color: var(--color-accent); color: var(--color-accent); transform: translateY(-3px); }
+    .contact-link i { font-size: 1.1rem; }
+    #contact .section-label { color: var(--color-accent); }
+    #contact .section-title { color: #fff; }
+    #contact p { color: var(--color-muted-inv); }
+    #experience .section-label { color: var(--color-accent); }
+    #experience .section-title { color: #fff; }
+    #roadmap .section-label { color: var(--color-accent); }
+    #roadmap .section-title { color: #fff; }
+    #roadmap .roadmap-content h3 { color: #fff; }
+    #roadmap .roadmap-content p { color: var(--color-muted-inv); }
+    #roadmap .roadmap-step-label { color: var(--color-accent); }
+    #roadmap .roadmap-step-label.future { color: var(--color-muted-inv); }
+    #roadmap .roadmap-connector { background: var(--color-border-dark); }
+    #roadmap .roadmap-dot.future { background: var(--color-border-dark); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--color-dark);
+      border-top: 1px solid var(--color-border-dark);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.8rem;
+      color: var(--color-muted-inv);
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>加藤 大聖</h1>
-  <p>名古屋市立大学 経済学部 | 河合勝彦ゼミ</p>
-</header>
 
-<nav>
-  <a href="#about">About</a>
-  <a href="#skills">Skills</a>
-  <a href="#works">Works</a>
-  <a href="#contact">Contact</a>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo"><!-- TODO: イニシャルや名前を入れる -->T.K.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#seminar">Seminar</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<section id="about" class="about">
-  <h2>About Me</h2>
-  <p>
-    名古屋市立大学経済学部に在籍し、河合勝彦ゼミで経済学を研究しています。
-    <!-- 自己紹介文をここに追加してください -->
-    興味のある分野や将来の目標などを記載してください。
-  </p>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#experience" class="mobile-link">Experience</a>
+  <a href="#seminar" class="mobile-link">Seminar</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#roadmap" class="mobile-link">Roadmap</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow" id="heroGlow"></div>
+  <p class="hero-label">ITコンサル志望 ／ ビジネス × AI</p>
+  <h1 class="hero-title">
+    ビジネスを動かす視点で、<br><em>AIで仕組みを変える。</em>
+  </h1>
+  <p class="hero-sub"><!-- TODO: 名前を入れる --> &nbsp;|&nbsp; 名古屋市立大学 経済学部</p>
+  <a href="#about" class="hero-cta">View Portfolio</a>
+  <div class="scroll-arrow"><span></span></div>
 </section>
 
-<section id="skills" class="skills">
-  <h2>Skills</h2>
-  <ul>
-    <li>経済学</li>
-    <li>データ分析</li>
-    <li>Excel / スプレッドシート</li>
-    <!-- スキルを追加してください -->
-  </ul>
-</section>
-
-<section id="works">
-  <h2>Works</h2>
-  <div class="card">
-    <h3>ゼミ研究</h3>
-    <p>河合勝彦ゼミでの研究内容をここに記載してください。</p>
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">ビジネスの現場から、<br>AIの設計者へ。</h2>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>スタートアップでの長期インターンを通じて、<strong>ビジネスが実際に動く現場</strong>を体験した。数字が動き、意思決定が積み重なり、組織が前進する——その感覚は、教室では得られないものだった。</p>
+        <p>Tongaliアイデアピッチコンテストでは、約900人・184チームが参加する舞台で、<strong>ゼロからビジネスを構想する力</strong>を磨いた。課題定義からビジネスモデル設計、ピッチまでを一貫して担当し、Tongali賞5位を受賞した。</p>
+        <p>ゼミではAIエージェントの設計・構築に取り組み、「<strong>自分がAIを動かす側になる</strong>」という方向性が定まった。ツールとして使うのではなく、AIを部下として活用し、ワークフロー全体を設計する——そのスタンスで学習を続けている。</p>
+        <blockquote class="about-goal">目指す姿は、AIを活用してビジネスワークフロー全体を設計できるITコンサルタント。</blockquote>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-num">184</div>
+          <div class="stat-desc">チーム中、Tongali賞5位受賞</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5mo</div>
+          <div class="stat-desc">ピッチコンテスト活動期間</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">AI</div>
+          <div class="stat-desc">エージェント設計・構築中（ゼミ）</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="card">
-    <h3>プロジェクト / インターン</h3>
-    <p>経験したプロジェクトやインターンシップをここに記載してください。</p>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Experience</p>
+      <h2 class="section-title">課題と向き合い、<br>動かしてきた実績。</h2>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card reveal">
+        <span class="exp-tag">Competition</span>
+        <h3>Tongali アイデアピッチコンテスト</h3>
+        <p class="exp-meta">約900人・184チーム参加 ／ 活動期間：約5ヶ月</p>
+        <p><!-- TODO: 課題→アクション→結果の詳細を記載 -->新規ビジネスプランの提案に挑戦。課題定義からビジネスモデル設計・ピッチまでを一貫して担当した。</p>
+        <div class="exp-result">🏆 Tongali賞 5位受賞 ／ 184チーム中入賞</div>
+      </div>
+      <div class="exp-card reveal">
+        <span class="exp-tag">Internship</span>
+        <h3>スタートアップ 長期インターン</h3>
+        <p class="exp-meta"><!-- TODO: 期間・企業名を入れる --></p>
+        <p>自社サービスの専門知識が属人化し、商談や説明が特定人物に依存するという課題を自ら特定。業界書籍を複数読み込み、初学者でも短時間で理解できるよう論点ごとに構造化したナレッジ資料を作成・社内共有した。</p>
+        <div class="exp-result">✦ 社員の理解促進に貢献し、説明工数の削減に寄与。課題を自ら特定し、組織全体の価値向上につなげた。</div>
+      </div>
+      <div class="exp-card reveal">
+        <span class="exp-tag">Leadership</span>
+        <h3>NCU Action HUB 学生団体運営</h3>
+        <p class="exp-meta">約10名チーム ／ 活動期間：9ヶ月 ／ アクセンチュアと共同プロジェクト</p>
+        <p>企業と連携した学生向けAI活用セミナーを企画・運営。AI知識が不足する中、複数の企画案を事前作成し利用場面を想定したシミュレーションを繰り返すことで、参加者視点の価値を検証。企業の認知向上と学生の学習ニーズを両立する構成にこだわり改善を続けた。</p>
+        <div class="exp-result">✦ アクセンチュアとの共同企画が採用、満足度75％を達成。</div>
+      </div>
+    </div>
   </div>
 </section>
 
+
+<!-- SEMINAR -->
+<section id="seminar">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Seminar Activity</p>
+      <h2 class="section-title">AIエージェントを、<br>自分の手で動かす。</h2>
+    </div>
+    <div class="seminar-box reveal">
+      <div class="in-progress">In Progress</div>
+      <h3>AIエージェント設計・構築プロジェクト</h3>
+      <p>ゼミでは、AIエージェントを自ら設計・構築し、ビジネスワークフロー（業務の仕組み）の見直しを実践している。単にAIツールを使うのではなく、「AIを部下として活用し、自分が経営者として意思決定・仕組み設計ができる状態」を目指して学習を進めている。</p>
+      <div class="tech-tags">
+        <span class="tech-tag">AIエージェント設計</span>
+        <span class="tech-tag">ワークフロー自動化</span>
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">LLM API</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Skills</p>
+      <h2 class="section-title">強みと、<br>伸ばしている力。</h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skills-col">
+        <h3>Business Skills</h3>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">新規事業立案</span>
+            <span class="skill-badge badge-strong">得意</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">課題の構造化・分析</span>
+            <span class="skill-badge badge-strong">得意</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">ピッチ・提案資料作成</span>
+            <span class="skill-badge badge-strong">得意</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">チームマネジメント</span>
+            <span class="skill-badge badge-strong">得意</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+        </div>
+      </div>
+      <div class="skills-col">
+        <h3>Technology Skills</h3>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">AIエージェント設計</span>
+            <span class="skill-badge badge-learning">学習中</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill learning" data-width="40"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">ワークフロー自動化</span>
+            <span class="skill-badge badge-learning">学習中</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill learning" data-width="35"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">Python</span>
+            <span class="skill-badge badge-beginner">入門</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill beginner" data-width="25"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">HTML / CSS</span>
+            <span class="skill-badge badge-beginner">入門</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill beginner" data-width="25"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Learning Roadmap</p>
+      <h2 class="section-title">これからの<br>成長ロードマップ。</h2>
+    </div>
+    <div class="roadmap reveal">
+      <div class="roadmap-step">
+        <div class="roadmap-line">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-connector"></div>
+        </div>
+        <div class="roadmap-content">
+          <p class="roadmap-step-label">現在</p>
+          <h3>AIエージェント設計・学習中</h3>
+          <p>ゼミでLLM APIやワークフロー自動化の基礎を学びながら、実際にエージェントを設計・構築している。</p>
+        </div>
+      </div>
+      <div class="roadmap-step">
+        <div class="roadmap-line">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-connector"></div>
+        </div>
+        <div class="roadmap-content">
+          <p class="roadmap-step-label">近い目標</p>
+          <h3>業務ワークフロー自動化ツールの試作・GitHub公開</h3>
+          <p>実際のビジネス課題を想定した自動化ツールを試作し、GitHubで公開。技術と課題解決思考を組み合わせた成果物を作る。</p>
+        </div>
+      </div>
+      <div class="roadmap-step">
+        <div class="roadmap-line">
+          <div class="roadmap-dot future"></div>
+        </div>
+        <div class="roadmap-content">
+          <p class="roadmap-step-label future">将来像</p>
+          <h3>AIを活用したビジネス改善提案ができるITコンサルタント</h3>
+          <p>ビジネス現場の経験とAI活用力を掛け合わせ、クライアントの業務変革を設計・推進できるコンサルタントになる。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
 <section id="contact">
-  <h2>Contact</h2>
-  <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
-  <!-- SNSリンクなどを追加してください -->
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Contact</p>
+      <h2 class="section-title">つながりましょう。</h2>
+      <p style="color:var(--color-muted);font-size:0.95rem;margin-bottom:40px;">お仕事・インターン・コラボレーションのご連絡はこちらから。</p>
+    </div>
+    <div class="contact-links reveal">
+      <!-- TODO: GitHubのURLを入れる -->
+      <a href="#" class="contact-link" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+      <!-- TODO: メールを入れる -->
+      <a href="mailto:your@email.com" class="contact-link">
+        <i class="fas fa-envelope"></i> Email
+      </a>
+      <!-- TODO: LinkedInのURLを入れる -->
+      <a href="#" class="contact-link" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i> LinkedIn
+      </a>
+    </div>
+  </div>
 </section>
 
 <footer>
-  <p>&copy; 2026 加藤大聖</p>
+  <p>&copy; 2026 <!-- TODO: 名前を入れる -->T.K. &nbsp;·&nbsp; Built with HTML / CSS / JS</p>
 </footer>
 
+<script>
+  // NAV scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // Hero cursor glow
+  const heroGlow = document.getElementById('heroGlow');
+  const heroSection = document.getElementById('hero');
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    heroGlow.style.left = (e.clientX - rect.left) + 'px';
+    heroGlow.style.top  = (e.clientY - rect.top)  + 'px';
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Skill bar animation
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+        skillObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const skillsSection = document.getElementById('skills');
+  if (skillsSection) skillObserver.observe(skillsSection);
+
+  // Count-up animation for stat numbers
+  function countUp(el, target, suffix, duration) {
+    const isNum = !isNaN(parseInt(target));
+    if (!isNum) return;
+    const end = parseInt(target);
+    const step = Math.ceil(end / (duration / 16));
+    let current = 0;
+    const timer = setInterval(() => {
+      current = Math.min(current + step, end);
+      el.textContent = current + suffix;
+      if (current >= end) clearInterval(timer);
+    }, 16);
+  }
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.stat-num').forEach(el => {
+          const raw = el.textContent.trim();
+          const num = raw.match(/\d+/);
+          const suffix = raw.replace(/\d+/, '');
+          if (num) countUp(el, num[0], suffix, 1200);
+        });
+        statObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  const aboutSection = document.getElementById('about');
+  if (aboutSection) statObserver.observe(aboutSection);
+
+  // Roadmap step stagger
+  const roadmapObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.roadmap-step').forEach((step, i) => {
+          step.style.opacity = '0';
+          step.style.transform = 'translateX(-20px)';
+          step.style.transition = `opacity 0.6s ease ${i * 0.2}s, transform 0.6s ease ${i * 0.2}s`;
+          requestAnimationFrame(() => {
+            step.style.opacity = '1';
+            step.style.transform = 'none';
+          });
+        });
+        roadmapObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  const roadmapSection = document.getElementById('roadmap');
+  if (roadmapSection) roadmapObserver.observe(roadmapSection);
+</script>
 </body>
 </html>
