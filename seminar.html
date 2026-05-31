@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seminar | Kato Tai Times</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .seminar-goal { background: var(--paper2); border-left: 4px solid var(--accent); padding: 18px 22px; margin-bottom: 36px; }
+    .seminar-goal .label { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 6px; }
+    .seminar-goal p { font-size: 0.92rem; color: var(--ink2); }
+
+    .activity-log { display: flex; flex-direction: column; }
+    .log-item { display: flex; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+    .log-date { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; color: var(--accent); min-width: 60px; padding-top: 3px; }
+    .log-title { font-family: var(--font-h); font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .log-body p { font-size: 0.85rem; color: var(--muted); }
+    .log-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+
+    .roadmap { display: flex; flex-direction: column; margin-top: 40px; }
+    .rm-step { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 20px; position: relative; }
+    .rm-step:not(:last-child)::before { content: ''; position: absolute; left: 7px; top: 18px; bottom: 0; width: 1px; background: var(--rule); }
+    .rm-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 3px; border: 2px solid var(--paper); box-shadow: 0 0 0 2px var(--accent); }
+    .rm-dot.current { background: var(--ink); box-shadow: 0 0 0 2px var(--ink); }
+    .rm-dot.future { background: var(--rule); box-shadow: 0 0 0 2px var(--rule-dark); }
+    .rm-label { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+    .rm-label.current { color: var(--ink); }
+    .rm-label.future { color: var(--muted); }
+    .rm-content h4 { font-family: var(--font-h); font-size: 0.9rem; font-weight: 700; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="site-title">Kato Tai Times</div>
+    <div class="header-date" id="hdate"></div>
+  </div>
+  <nav>
+    <a href="index.html">Top</a>
+    <a href="seminar.html" class="active">Seminar</a>
+    <a href="ramen.html">Ramen</a>
+    <a href="band.html">Band</a>
+    <a href="travel.html">Travel</a>
+  </nav>
+</header>
+
+<main>
+  <h1 class="page-title">Seminar <span>ゼミ活動</span></h1>
+
+  <div class="seminar-goal reveal">
+    <div class="label">GOAL</div>
+    <p>AIエージェントを自分で設計・構築し、ビジネスのワークフローを見直す。AIをツールとして使うのではなく、<strong>AIを動かす側</strong>になることを目指している。</p>
+  </div>
+
+  <h2 class="page-title" style="font-size:1.2rem;">活動ログ</h2>
+  <div class="activity-log reveal">
+    <div class="log-item">
+      <div class="log-date">2026.05</div>
+      <div class="log-body">
+        <div class="log-title">ポートフォリオサイト制作</div>
+        <p>HTML / CSS / JS でポートフォリオサイトをゼロから構築。Kiro CLI（AIエージェント）を活用しながらコーディングを学習。</p>
+        <div class="log-tags"><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">Kiro CLI</span></div>
+      </div>
+    </div>
+    <div class="log-item">
+      <div class="log-date">2026.04</div>
+      <div class="log-body">
+        <div class="log-title">ゼミ活動開始 / AIエージェント概論</div>
+        <p>AIエージェントとは何か、ビジネスへの応用可能性について学習開始。LLM APIの基礎を把握。</p>
+        <div class="log-tags"><span class="tag">LLM</span><span class="tag">AIエージェント</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="page-title" style="font-size:1.2rem;margin-top:48px;">ロードマップ</h2>
+  <div class="roadmap reveal">
+    <div class="rm-step">
+      <div class="rm-dot"></div>
+      <div class="rm-content"><div class="rm-label">完了</div><h4>ポートフォリオサイト制作</h4></div>
+    </div>
+    <div class="rm-step">
+      <div class="rm-dot current"></div>
+      <div class="rm-content"><div class="rm-label current">進行中</div><h4>コーディング学習 / アプリ改造</h4></div>
+    </div>
+    <div class="rm-step">
+      <div class="rm-dot future"></div>
+      <div class="rm-content"><div class="rm-label future">予定</div><h4>オリジナル作品制作・GitHub公開</h4></div>
+    </div>
+    <div class="rm-step">
+      <div class="rm-dot future"></div>
+      <div class="rm-content"><div class="rm-label future">予定</div><h4>産学連携プロジェクト参加</h4></div>
+    </div>
+  </div>
+</main>
+
+<footer>&copy; 2026 Kato Tai &nbsp;·&nbsp; 🐹 おすし監修</footer>
+<script>
+  const d = new Date();
+  document.getElementById('hdate').textContent = d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

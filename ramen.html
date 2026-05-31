@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ramen | Kato Tai Times</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ramen-intro { font-size: 0.9rem; color: var(--muted); margin-bottom: 32px; border-left: 3px solid var(--accent); padding-left: 14px; }
+    .ramen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+    .ramen-card { background: var(--paper2); border: 1px solid var(--rule); overflow: hidden; transition: transform 0.2s; }
+    .ramen-card:hover { transform: translateY(-3px); }
+    .ramen-img { height: 120px; background: linear-gradient(135deg, #c8b87a, #a89050); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; overflow: hidden; }
+    .ramen-img img { width: 100%; height: 100%; object-fit: cover; }
+    .ramen-info { padding: 12px; }
+    .ramen-info h4 { font-family: var(--font-h); font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+    .ramen-comment { font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; }
+    .ramen-stars { color: var(--accent); font-size: 0.78rem; }
+    .add-card { border: 1px dashed var(--rule-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; color: var(--muted); font-size: 0.83rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="site-title">Kato Tai Times</div>
+    <div class="header-date" id="hdate"></div>
+  </div>
+  <nav>
+    <a href="index.html">Top</a>
+    <a href="seminar.html">Seminar</a>
+    <a href="ramen.html" class="active">Ramen</a>
+    <a href="band.html">Band</a>
+    <a href="travel.html">Travel</a>
+  </nav>
+</header>
+
+<main>
+  <h1 class="page-title">Ramen Log <span>ラーメン記録</span></h1>
+  <p class="ramen-intro">次郎系を中心に食べ歩き中。ニンニクアブラカラメ。</p>
+
+  <div class="ramen-grid reveal">
+    <div class="ramen-card">
+      <div class="ramen-img">🍜</div>
+      <div class="ramen-info"><h4>夢を語れ</h4><p class="ramen-comment">次郎系の名店</p><div class="ramen-stars">★★★★★</div></div>
+    </div>
+    <div class="ramen-card">
+      <div class="ramen-img">🍜</div>
+      <div class="ramen-info"><h4>ラーメン大</h4><p class="ramen-comment">二郎インスパイア</p><div class="ramen-stars">★★★★★</div></div>
+    </div>
+    <div class="ramen-card">
+      <div class="ramen-img">🍜</div>
+      <div class="ramen-info"><h4>豚山</h4><p class="ramen-comment">チェーンだけど本気</p><div class="ramen-stars">★★★★☆</div></div>
+    </div>
+    <div class="ramen-card">
+      <div class="ramen-img">🍜</div>
+      <div class="ramen-info"><h4>立川マシマシ</h4><p class="ramen-comment">マシマシの暴力</p><div class="ramen-stars">★★★★☆</div></div>
+    </div>
+    <div class="ramen-card">
+      <div class="ramen-img">🍜</div>
+      <div class="ramen-info"><h4>ラーメンエボシ</h4><p class="ramen-comment">次郎系</p><div class="ramen-stars">★★★★☆</div></div>
+    </div>
+    <div class="ramen-card add-card"><div style="font-size:2rem;margin-bottom:8px;">＋</div><p>食べたら追記する</p></div>
+  </div>
+</main>
+
+<footer>&copy; 2026 Kato Tai &nbsp;·&nbsp; 🐹 おすし監修</footer>
+<script>
+  const d = new Date();
+  document.getElementById('hdate').textContent = d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -3,599 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KATO TAI TIMES</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <title>Kato Tai Times</title>
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --ink: #111111;
-      --ink2: #222222;
-      --paper: #d6d0c4;
-      --paper2: #ccc6b8;
-      --paper3: #c8c2b4;
-      --rule: #9a9080;
-      --rule-dark: #6b6050;
-      --accent: #8b1a1a;
-      --accent2: #c0392b;
-      --muted: #4a4035;
-      --font-head: 'Noto Serif JP', serif;
-      --font-body: 'Noto Serif JP', serif;
-      --font-mono: 'Source Code Pro', monospace;
-      --font-frak: 'Noto Serif JP', serif;
-    }
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.8; overflow-x: hidden; }
-    a { color: inherit; text-decoration: none; }
-    hr.rule { border: none; border-top: 1px solid var(--rule); margin: 0; }
-    hr.rule-thick { border: none; border-top: 3px double var(--ink); margin: 0; }
-    hr.rule-thin { border: none; border-top: 1px solid var(--rule); margin: 0; }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: var(--paper); border-bottom: 3px double var(--ink);
-      padding: 0 32px;
-    }
-    .nav-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 52px;
-    }
-    .nav-logo { font-family: var(--font-head); font-weight: 900; font-size: 1.1rem; color: var(--ink); letter-spacing: 0.1em; }
-    .nav-links { display: flex; gap: 0; list-style: none; }
-    .nav-links li { border-left: 1px solid var(--rule); }
-    .nav-links li:last-child { border-right: 1px solid var(--rule); }
-    .nav-links a { display: block; padding: 0 16px; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink2); line-height: 52px; transition: background 0.15s, color 0.15s; }
-    .nav-links a:hover { background: var(--ink); color: var(--paper); }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: all 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu {
-      display: none; position: fixed; inset: 0;
-      background: var(--paper); z-index: 999;
-      flex-direction: column; align-items: center; justify-content: center; gap: 0;
-      border-top: 3px double var(--ink);
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); padding: 16px 0; width: 100%; text-align: center; border-bottom: 1px solid var(--rule); transition: background 0.15s; }
-    .mobile-menu a:hover { background: var(--ink); color: var(--paper); }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-    }
-
-    /* ── HERO (新聞一面) ── */
-    #hero {
-      padding-top: 52px;
-      background: var(--paper);
-    }
-    .hero-dateline {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 8px 32px;
-      font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted);
-      border-bottom: 1px solid var(--rule);
-    }
-    .hero-masthead {
-      text-align: center;
-      padding: 24px 32px 16px;
-      border-bottom: 3px double var(--ink);
-      max-width: 1100px; margin: 0 auto;
-    }
-    .masthead-title {
-      font-family: var(--font-head);
-      font-size: clamp(2.5rem, 7vw, 5rem);
-      font-weight: 900;
-      color: var(--ink);
-      line-height: 1;
-      letter-spacing: 0.15em;
-    }
-    .masthead-sub {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-    .hero-columns {
-      max-width: 1100px; margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 2px 2fr 2px 1fr;
-      gap: 0;
-      padding: 0 32px;
-    }
-    .col-divider { background: var(--rule); }
-    .hero-col { padding: 24px 20px; }
-    .hero-col-main { padding: 24px 28px; }
-    .hero-kicker {
-      font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 8px;
-    }
-    .hero-headline {
-      font-family: var(--font-head);
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 900; line-height: 1.1;
-      color: var(--ink); margin-bottom: 16px;
-    }
+    .hero { border-bottom: 1px solid var(--rule); padding-bottom: 36px; margin-bottom: 48px; }
+    .hero-kicker { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .hero-headline { font-family: var(--font-h); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.2; margin-bottom: 16px; }
     .hero-headline em { font-style: italic; color: var(--accent); }
-    .hero-deck { font-size: 0.95rem; color: var(--ink2); border-top: 1px solid var(--rule); padding-top: 12px; margin-bottom: 16px; }
-    .hero-byline { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; }
-    .hero-side-head { font-family: var(--font-head); font-size: 1rem; font-weight: 700; margin-bottom: 8px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
-    .hero-side-text { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
-    .hero-index { margin-top: 16px; }
-    .hero-index-item { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; padding: 4px 0; border-bottom: 1px dotted var(--rule); color: var(--ink2); }
-    .hero-index-item a:hover { color: var(--accent); }
-    @media (max-width: 768px) {
-      .hero-columns { grid-template-columns: 1fr; padding: 0 16px; }
-      .col-divider { display: none; }
-      .hero-col, .hero-col-main { padding: 16px 0; border-bottom: 1px solid var(--rule); }
-      .hero-dateline, .hero-masthead { padding-left: 16px; padding-right: 16px; }
-    }
+    .hero-body { font-size: 0.95rem; color: var(--muted); max-width: 600px; margin-bottom: 20px; }
+    .hero-meta { font-family: var(--font-mono); font-size: 0.72rem; color: var(--rule-dark); }
 
-    /* ── COMMON ── */
-    section { padding: 64px 32px; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .section-header { text-align: center; margin-bottom: 40px; }
-    .section-kicker { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-    .section-title { font-family: var(--font-head); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 900; line-height: 1.15; color: var(--ink); }
-    .section-rule { display: flex; align-items: center; gap: 12px; margin: 16px auto 0; max-width: 200px; }
-    .section-rule::before, .section-rule::after { content: ''; flex: 1; height: 1px; background: var(--rule-dark); }
-    .section-rule span { font-size: 0.7rem; color: var(--rule-dark); }
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* ── ABOUT ── */
-    .about-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 48px; align-items: start; }
-    .drop-cap::first-letter { font-family: var(--font-head); font-size: 3.2em; font-weight: 900; float: left; line-height: 0.8; margin: 4px 8px 0 0; color: var(--ink); }
-    .about-text p { margin-bottom: 14px; font-size: 0.95rem; }
-    .about-text strong { color: var(--ink); }
-    .pet-card { display: flex; gap: 14px; align-items: center; padding: 16px; background: var(--paper2); border: 1px solid var(--rule); margin-bottom: 20px; }
-    .pet-photo { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid var(--rule-dark); }
-    .pet-photo img { width: 100%; height: 100%; object-fit: cover; }
-    .pet-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; }
-    .pet-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; border-bottom: 1px solid var(--rule); padding-bottom: 40px; }
+    .profile-text p { font-size: 0.93rem; margin-bottom: 12px; color: var(--ink2); }
     .fact-list { display: flex; flex-direction: column; gap: 10px; }
-    .fact-row { display: flex; gap: 10px; align-items: flex-start; font-size: 0.85rem; color: var(--ink2); padding-bottom: 10px; border-bottom: 1px dotted var(--rule); }
-    .fact-icon { flex-shrink: 0; }
-    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+    .fact-row { display: flex; gap: 10px; font-size: 0.88rem; padding-bottom: 10px; border-bottom: 1px dotted var(--rule); }
+    .pet-card { display: flex; gap: 14px; align-items: center; padding: 16px; background: var(--paper2); border: 1px solid var(--rule); margin-bottom: 16px; }
+    .pet-photo { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid var(--rule-dark); }
+    .pet-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .pet-name { font-family: var(--font-h); font-weight: 700; font-size: 0.95rem; }
+    .pet-desc { font-size: 0.78rem; color: var(--muted); }
+    @media (max-width: 640px) { .profile-grid { grid-template-columns: 1fr; } }
 
-    /* ── SEMINAR ── */
-    .seminar-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 48px; }
-    .seminar-goal { background: var(--paper2); border-left: 4px solid var(--accent); padding: 20px 24px; margin-bottom: 24px; }
-    .sg-label { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 8px; }
-    .seminar-goal p { font-size: 0.9rem; color: var(--ink2); }
-    .seminar-goal strong { color: var(--ink); }
-    .log-heading { font-family: var(--font-head); font-size: 1rem; font-weight: 700; margin-bottom: 16px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
-    .activity-log { display: flex; flex-direction: column; }
-    .log-item { display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
-    .log-date { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; color: var(--accent); min-width: 56px; padding-top: 3px; }
-    .log-title { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
-    .log-body p { font-size: 0.83rem; color: var(--muted); }
-    .log-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-    .ltag { font-size: 0.7rem; padding: 2px 8px; border: 1px solid var(--rule-dark); color: var(--muted); font-family: var(--font-mono); }
-    .roadmap-head { font-family: var(--font-head); font-size: 1rem; font-weight: 700; margin-bottom: 16px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
-    .roadmap { display: flex; flex-direction: column; }
-    .rm-step { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 20px; position: relative; }
-    .rm-step:not(.last)::before { content: ''; position: absolute; left: 7px; top: 18px; bottom: 0; width: 1px; background: var(--rule); }
-    .rm-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 3px; border: 2px solid var(--paper); box-shadow: 0 0 0 2px var(--accent); }
-    .rm-dot.current { background: var(--ink); box-shadow: 0 0 0 2px var(--ink); }
-    .rm-dot.future { background: var(--rule); box-shadow: 0 0 0 2px var(--rule-dark); }
-    .rm-content h4 { font-family: var(--font-head); font-size: 0.88rem; font-weight: 700; }
-    .rm-label { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
-    .rm-label.current { color: var(--ink); }
-    .rm-label.future { color: var(--muted); }
-    @media (max-width: 768px) { .seminar-layout { grid-template-columns: 1fr; } }
-
-    /* ── WORKS ── */
-    .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-    .work-card { padding: 24px; background: var(--paper3); border: 1px solid var(--rule); transition: transform 0.2s; }
+    .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .work-card { padding: 22px; background: var(--paper2); border: 1px solid var(--rule); transition: transform 0.2s; }
     .work-card:hover { transform: translateY(-3px); }
     .work-card.wip { opacity: 0.5; border-style: dashed; }
-    .work-num { font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent); font-weight: 600; letter-spacing: 0.1em; margin-bottom: 8px; }
-    .work-card h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-    .work-card p { font-size: 0.85rem; color: var(--muted); margin-bottom: 14px; }
-    .work-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-    .wtag { font-size: 0.7rem; padding: 2px 8px; border: 1px solid var(--rule-dark); color: var(--muted); font-family: var(--font-mono); }
-    .wip-tag { border-style: dashed; }
-    .work-link { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .work-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); font-weight: 600; letter-spacing: 0.1em; margin-bottom: 6px; }
+    .work-card h3 { font-family: var(--font-h); font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .work-card p { font-size: 0.83rem; color: var(--muted); margin-bottom: 12px; }
+    .work-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .work-link { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; }
     .work-link:hover { color: var(--ink); }
-
-    /* ── RAMEN ── */
-    .ramen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
-    .ramen-card { background: var(--paper2); border: 1px solid var(--rule); overflow: hidden; transition: transform 0.2s; }
-    .ramen-card:hover { transform: translateY(-3px); }
-    .ramen-img-placeholder { height: 120px; background: linear-gradient(135deg, #f5e6c8, #e8c87a); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
-    .ramen-info { padding: 12px; }
-    .ramen-info h4 { font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
-    .ramen-comment { font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; }
-    .ramen-stars { color: var(--accent); font-size: 0.78rem; }
-    .add-card { border: 1px dashed var(--rule-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; color: var(--muted); font-size: 0.83rem; }
-
-    /* ── BAND ── */
-    .band-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-    .band-card { padding: 24px; border: 1px solid #3a3020; background: rgba(255,255,255,0.04); }
-    .band-card h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--paper); margin-bottom: 10px; border-bottom: 1px solid #3a3020; padding-bottom: 8px; }
-    .band-card p { font-size: 0.88rem; color: var(--paper2); }
-    .band-sub { font-size: 0.78rem; color: var(--muted-inv, #8a7560); margin-top: 6px; }
-    .song-list, .gear-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .song-list li, .gear-list li { font-size: 0.83rem; color: var(--paper2); padding-left: 10px; border-left: 2px solid #3a3020; }
-
-    /* ── TRAVEL ── */
-    .country-list { display: flex; flex-direction: column; gap: 10px; }
-    .country-item { background: var(--paper2); border: 1px solid var(--rule); overflow: hidden; }
-    .country-btn { width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 24px; background: none; border: none; cursor: pointer; text-align: left; transition: background 0.15s; }
-    .country-btn:hover { background: var(--paper); }
-    .future-btn { cursor: default; opacity: 0.5; }
-    .c-flag { font-size: 1.6rem; }
-    .c-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; flex: 1; }
-    .c-status { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border: 1px solid; }
-    .c-status.done { color: var(--accent); border-color: var(--accent); }
-    .c-status.planned { color: var(--muted); border-color: var(--rule-dark); }
-    .c-arrow { font-size: 0.7rem; color: var(--muted); transition: transform 0.3s; }
-    .country-item.open .c-arrow { transform: rotate(180deg); }
-    .country-photos { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-    .country-item.open .country-photos { max-height: 2000px; }
-    .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; padding: 0 12px 12px; }
-    .photo-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; transition: transform 0.2s; cursor: pointer; }
-    .photo-grid img:hover { transform: scale(1.04); }
-
-    /* ── CONTACT ── */
-    .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-    .contact-link { display: inline-flex; align-items: center; gap: 10px; padding: 12px 28px; border: 1px solid var(--rule-dark); font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; color: var(--ink2); letter-spacing: 0.08em; transition: background 0.15s, color 0.15s; }
-    .contact-link:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-
-    /* ── FOOTER ── */
-    footer { background: var(--ink); border-top: 3px double var(--paper2); padding: 20px 32px; }
-    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 0.75rem; color: var(--rule); }
-    .footer-logo { font-family: var(--font-head); font-size: 1rem; font-weight: 900; color: var(--paper2); letter-spacing: 0.1em; }
   </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <div class="nav-logo">Kato Tai</div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#seminar">Seminar</a></li>
-      <li><a href="#works">Works</a></li>
-      <li><a href="#ramen">Ramen</a></li>
-      <li><a href="#band">Band</a></li>
-      <li><a href="#travel">Travel</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="メニュー">
-      <span></span><span></span><span></span>
-    </button>
+<header>
+  <div class="header-top">
+    <div class="site-title">Kato Tai Times</div>
+    <div class="header-date" id="hdate"></div>
   </div>
-</nav>
+  <nav>
+    <a href="index.html" class="active">Top</a>
+    <a href="seminar.html">Seminar</a>
+    <a href="ramen.html">Ramen</a>
+    <a href="band.html">Band</a>
+    <a href="travel.html">Travel</a>
+  </nav>
+</header>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#about" class="mobile-link">About</a>
-  <a href="#seminar" class="mobile-link">Seminar</a>
-  <a href="#works" class="mobile-link">Works</a>
-  <a href="#ramen" class="mobile-link">Ramen</a>
-  <a href="#band" class="mobile-link">Band</a>
-  <a href="#travel" class="mobile-link">Travel</a>
-  <a href="#contact" class="mobile-link">Contact</a>
-</div>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-dateline">
-    <span>名古屋市立大学 経済学部 AIゼミ</span>
-    <span id="hero-date"></span>
-    <span>Vol. 1</span>
+<main>
+  <!-- HERO -->
+  <div class="hero reveal">
+    <div class="hero-kicker">名古屋市立大学 経済学部 AIゼミ</div>
+    <h1 class="hero-headline">AIで仕組みを変える。<br><em>ラーメンで心を満たす。</em></h1>
+    <p class="hero-body">名古屋市立大学経済学部のAIゼミ生。AIエージェント設計・ビジネスワークフロー改善に挑む傍ら、次郎系ラーメンを食べ歩き、バンドでギターを弾き、ハムスターのおすしを溺愛する日々の記録。</p>
+    <div class="hero-meta">Kato Tai &nbsp;·&nbsp; ギタリスト / 次郎系信者 / ハムスター親</div>
   </div>
-  <div class="hero-masthead">
-    <div class="masthead-title">Kato Tai Times</div>
-    <div class="masthead-sub">The Personal Chronicle of Kato Tai &nbsp;·&nbsp; Est. 2026</div>
-  </div>
-  <hr class="rule-thick">
-  <div class="hero-columns">
-    <div class="hero-col">
-      <div class="hero-side-head">Contents</div>
-      <div class="hero-index">
-        <div class="hero-index-item"><a href="#about">About Me</a><span>A2</span></div>
-        <div class="hero-index-item"><a href="#seminar">Seminar</a><span>B1</span></div>
-        <div class="hero-index-item"><a href="#works">Works</a><span>B3</span></div>
-        <div class="hero-index-item"><a href="#ramen">Ramen Log</a><span>C1</span></div>
-        <div class="hero-index-item"><a href="#band">Band</a><span>C4</span></div>
-        <div class="hero-index-item"><a href="#travel">Travel</a><span>D2</span></div>
-      </div>
-    </div>
-    <div class="col-divider"></div>
-    <div class="hero-col-main">
-      <div class="hero-kicker">Breaking News</div>
-      <h1 class="hero-headline">AIで仕組みを変える。<br><em>ラーメンで心を満たす。</em></h1>
-      <p class="hero-deck">名古屋市立大学経済学部のAIゼミ生・加藤大聖が、AIエージェント設計・ビジネスワークフロー改善に挑む。傍ら次郎系ラーメンを食べ歩き、バンドでギターを弾き、ハムスターのおすしを溺愛する日々の記録。</p>
-      <div class="hero-byline">By Kato Tai &nbsp;·&nbsp; AIゼミ / ギタリスト / 次郎系信者 / ハムスター親</div>
-    </div>
-    <div class="col-divider"></div>
-    <div class="hero-col">
-      <div class="hero-side-head">Today's Highlight</div>
-      <p class="hero-side-text">ハムスターのおすし、本日も元気。次郎系ラーメン食べ歩き継続中。セブ島渡航済み、次の目的地を模索中。</p>
-    </div>
-  </div>
-  <hr class="rule-thick">
-</section>
 
-
-<!-- ABOUT -->
-<section id="about" style="background:var(--paper3); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-kicker">About Me</div>
-      <h2 class="section-title">何者かというと。</h2>
-      <div class="section-rule"><span>✦</span></div>
-    </div>
-    <div class="about-grid reveal">
-      <div class="about-text">
-        <p class="drop-cap">名古屋市立大学経済学部のAIゼミに所属。AIエージェントの設計・構築を通じて、ビジネスのワークフローを見直すことを目標にしている。今はコーディングを学びながらポートフォリオサイトを作ったりアプリを改造したりしている。</p>
-        <p>趣味は<strong>次郎系ラーメン</strong>の食べ歩き、<strong>バンド（ギター・ベース）</strong>、そして海外ふらっと行くやつ。</p>
-        <p>🎓 名古屋市立大学 経済学部</p>
-      </div>
-      <div class="about-side">
-        <div class="pet-card">
-          <div class="pet-photo">
-            <img src="おすし写真.png" alt="おすし">
-          </div>
-          <div class="pet-caption">
-            <div class="pet-name">おすし</div>
-            <div class="pet-desc">ハムスター / 最近の推し<br>名前のセンスには自信あり</div>
-          </div>
-        </div>
-        <div class="fact-list">
-          <div class="fact-row"><span class="fact-icon">🤖</span><span>AIゼミ所属・エージェント設計中</span></div>
-          <div class="fact-row"><span class="fact-icon">🍜</span><span>次郎系信者。ニンニクアブラカラメ</span></div>
-          <div class="fact-row"><span class="fact-icon">🎸</span><span>ギターメイン、ベースも弾ける</span></div>
-          <div class="fact-row"><span class="fact-icon">✈️</span><span>フィリピン渡航済み、世界一周計画中</span></div>
+  <!-- PROFILE -->
+  <h2 class="page-title">Profile <span>自己紹介</span></h2>
+  <div class="profile-grid reveal">
+    <div class="profile-text">
+      <p>名古屋市立大学経済学部のAIゼミに所属。AIエージェントの設計・構築を通じて、ビジネスのワークフローを見直すことを目標にしている。</p>
+      <p>今はコーディングを学びながらポートフォリオサイトを作ったりアプリを改造したりしている。今後は作品制作や産学連携にも挑戦予定。</p>
+      <div class="pet-card">
+        <div class="pet-photo"><img src="おすし写真.png" alt="おすし"></div>
+        <div>
+          <div class="pet-name">おすし</div>
+          <div class="pet-desc">ハムスター / 最近の推し / 名前のセンスには自信あり</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- SEMINAR -->
-<section id="seminar" style="background:var(--paper);">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-kicker">Seminar Activity</div>
-      <h2 class="section-title">ゼミで何やってるか。</h2>
-      <div class="section-rule"><span>✦</span></div>
-    </div>
-    <div class="seminar-layout reveal">
-      <div class="seminar-main">
-        <div class="seminar-goal">
-          <div class="sg-label">GOAL</div>
-          <p>AIエージェントを自分で設計・構築し、ビジネスのワークフローを見直す。AIをツールとして使うのではなく、<strong>AIを動かす側</strong>になることを目指している。</p>
-        </div>
-        <div class="log-heading" style="margin-top:32px;">📋 活動ログ</div>
-        <div class="activity-log">
-          <div class="log-item">
-            <div class="log-date">2026.05</div>
-            <div class="log-body">
-              <div class="log-title">ポートフォリオサイト制作</div>
-              <p>HTML / CSS / JS でポートフォリオサイトをゼロから構築。Kiro CLI（AIエージェント）を活用しながらコーディングを学習。</p>
-              <div class="log-tags"><span class="ltag">HTML/CSS</span><span class="ltag">JavaScript</span><span class="ltag">Kiro CLI</span></div>
-            </div>
-          </div>
-          <div class="log-item">
-            <div class="log-date">2026.04</div>
-            <div class="log-body">
-              <div class="log-title">ゼミ活動開始 / AIエージェント概論</div>
-              <p>AIエージェントとは何か、ビジネスへの応用可能性について学習開始。LLM APIの基礎を把握。</p>
-              <div class="log-tags"><span class="ltag">LLM</span><span class="ltag">AIエージェント</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="seminar-side">
-        <div class="roadmap-head">🗺️ ロードマップ</div>
-        <div class="roadmap">
-          <div class="rm-step">
-            <div class="rm-dot"></div>
-            <div class="rm-content"><span class="rm-label">完了</span><h4>ポートフォリオサイト制作</h4></div>
-          </div>
-          <div class="rm-step">
-            <div class="rm-dot current"></div>
-            <div class="rm-content"><span class="rm-label current">進行中</span><h4>コーディング学習 / アプリ改造</h4></div>
-          </div>
-          <div class="rm-step">
-            <div class="rm-dot future"></div>
-            <div class="rm-content"><span class="rm-label future">予定</span><h4>オリジナル作品制作・GitHub公開</h4></div>
-          </div>
-          <div class="rm-step last">
-            <div class="rm-dot future"></div>
-            <div class="rm-content"><span class="rm-label future">予定</span><h4>産学連携プロジェクト参加</h4></div>
-          </div>
-        </div>
-      </div>
+    <div class="fact-list">
+      <div class="fact-row"><span>🎓</span><span>名古屋市立大学 経済学部</span></div>
+      <div class="fact-row"><span>🤖</span><span>AIゼミ所属・エージェント設計中</span></div>
+      <div class="fact-row"><span>🍜</span><span>次郎系信者。ニンニクアブラカラメ</span></div>
+      <div class="fact-row"><span>🎸</span><span>ギターメイン、ベースも弾ける</span></div>
+      <div class="fact-row"><span>✈️</span><span>フィリピン渡航済み、世界一周計画中</span></div>
+      <div class="fact-row"><span>🐹</span><span>ハムスター「おすし」の親</span></div>
     </div>
   </div>
-</section>
 
-<!-- WORKS -->
-<section id="works" style="background:var(--paper2); border-top:1px solid var(--rule);">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-kicker">Works</div>
-      <h2 class="section-title">作ったもの。</h2>
-      <div class="section-rule"><span>✦</span></div>
+  <!-- WORKS -->
+  <h2 class="page-title">Works <span>作ったもの</span></h2>
+  <div class="works-grid reveal">
+    <div class="work-card">
+      <div class="work-num">No.1</div>
+      <h3>このポートフォリオサイト</h3>
+      <p>HTML / CSS / JS で構築。Kiro CLI（AIエージェント）と一緒に作った。</p>
+      <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+      <a href="https://github.com/taisei-kato-ncu/portfolio" target="_blank" rel="noopener" class="work-link"><i class="fab fa-github"></i> GitHub</a>
     </div>
-    <div class="works-grid reveal">
-      <div class="work-card">
-        <div class="work-num">No.1</div>
-        <h3>このポートフォリオサイト</h3>
-        <p>HTML / CSS / JS で構築。AIエージェント（Kiro CLI）と一緒に作った初めての本格的なサイト。</p>
-        <div class="work-tags"><span class="wtag">HTML</span><span class="wtag">CSS</span><span class="wtag">JS</span></div>
-        <a href="https://github.com/taisei-kato-ncu/portfolio" target="_blank" rel="noopener" class="work-link"><i class="fab fa-github"></i> GitHub</a>
-      </div>
-      <div class="work-card wip">
-        <div class="work-num">No.2</div>
-        <h3>次の作品</h3>
-        <p>制作中…</p>
-        <div class="work-tags"><span class="wtag wip-tag">Coming Soon</span></div>
-      </div>
+    <div class="work-card wip">
+      <div class="work-num">No.2</div>
+      <h3>次の作品</h3>
+      <p>制作中…</p>
+      <div class="work-tags"><span class="tag">Coming Soon</span></div>
     </div>
   </div>
-</section>
+</main>
 
-
-<!-- RAMEN -->
-<section id="ramen" style="background:var(--paper3); border-top:1px solid var(--rule);">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-kicker">Ramen Log</div>
-      <h2 class="section-title">ラーメン記録。</h2>
-      <div class="section-rule"><span>✦</span></div>
-      <p style="font-size:0.85rem;color:var(--muted);margin-top:12px;">次郎系を中心に食べ歩き中。ニンニクアブラカラメ。</p>
-    </div>
-    <div class="ramen-grid reveal">
-      <div class="ramen-card"><div class="ramen-img-placeholder">🍜</div><div class="ramen-info"><h4>夢を語れ</h4><p class="ramen-comment">次郎系の名店</p><div class="ramen-stars">★★★★★</div></div></div>
-      <div class="ramen-card"><div class="ramen-img-placeholder">🍜</div><div class="ramen-info"><h4>ラーメン大</h4><p class="ramen-comment">二郎インスパイア</p><div class="ramen-stars">★★★★★</div></div></div>
-      <div class="ramen-card"><div class="ramen-img-placeholder">🍜</div><div class="ramen-info"><h4>豚山</h4><p class="ramen-comment">チェーンだけど本気</p><div class="ramen-stars">★★★★☆</div></div></div>
-      <div class="ramen-card"><div class="ramen-img-placeholder">🍜</div><div class="ramen-info"><h4>立川マシマシ</h4><p class="ramen-comment">マシマシの暴力</p><div class="ramen-stars">★★★★☆</div></div></div>
-      <div class="ramen-card"><div class="ramen-img-placeholder">🍜</div><div class="ramen-info"><h4>ラーメンエボシ</h4><p class="ramen-comment">次郎系</p><div class="ramen-stars">★★★★☆</div></div></div>
-      <div class="ramen-card add-card"><div style="font-size:2rem;margin-bottom:8px;">＋</div><p>食べたら追記する</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- BAND -->
-<section id="band" style="background:var(--ink); border-top:3px double var(--ink);">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-kicker" style="color:var(--accent2);">Band</div>
-      <h2 class="section-title" style="color:var(--paper);">バンド活動。</h2>
-      <div class="section-rule" style="--rule-dark:#8a7560;"><span style="color:var(--rule-dark);">✦</span></div>
-    </div>
-    <div class="band-grid reveal">
-      <div class="band-card">
-        <h3>🎸 担当パート</h3>
-        <p>ギター（メイン）・ベース</p>
-        <p class="band-sub">機材沼に片足突っ込んでる</p>
-      </div>
-      <div class="band-card">
-        <h3>🎵 やった曲リスト</h3>
-        <ul class="song-list"><li>準備中…</li></ul>
-      </div>
-      <div class="band-card">
-        <h3>🎛️ 機材</h3>
-        <ul class="gear-list"><li>準備中…</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TRAVEL -->
-<section id="travel" style="background:var(--paper3); border-top:1px solid var(--rule);">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-kicker">Travel</div>
-      <h2 class="section-title">海外記録。</h2>
-      <div class="section-rule"><span>✦</span></div>
-      <p style="font-size:0.85rem;color:var(--muted);margin-top:12px;">世界一周計画進行中。クリックで写真を見る。</p>
-    </div>
-    <div class="country-list reveal">
-      <div class="country-item">
-        <button class="country-btn" onclick="toggleCountry(this)">
-          <span class="c-flag">🇵🇭</span>
-          <span class="c-name">フィリピン・セブ島</span>
-          <span class="c-status done">渡航済み</span>
-          <span class="c-arrow">▼</span>
-        </button>
-        <div class="country-photos">
-          <div class="photo-grid">
-            <img src="セブ島/S__165748744_0.jpg" alt="セブ島">
-            <img src="セブ島/S__165748745_0.jpg" alt="セブ島">
-            <img src="セブ島/S__165748746_0.jpg" alt="セブ島">
-            <img src="セブ島/S__165748747_0.jpg" alt="セブ島">
-            <img src="セブ島/S__165748748_0.jpg" alt="セブ島">
-            <img src="セブ島/S__165748749_0.jpg" alt="セブ島">
-            <img src="セブ島/S__165748750_0.jpg" alt="セブ島">
-            <img src="セブ島/S__165748751_0.jpg" alt="セブ島">
-            <img src="セブ島/S__165748752_0.jpg" alt="セブ島">
-            <img src="セブ島/S__165748753_0.jpg" alt="セブ島">
-          </div>
-        </div>
-      </div>
-      <div class="country-item">
-        <button class="country-btn future-btn" disabled>
-          <span class="c-flag">🌍</span>
-          <span class="c-name">次の渡航先</span>
-          <span class="c-status planned">計画中</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" style="background:var(--paper2); border-top:3px double var(--ink); text-align:center;">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-kicker">Contact</div>
-      <h2 class="section-title">つながりましょう。</h2>
-      <p style="color:var(--muted);margin-top:12px;margin-bottom:36px;font-size:0.9rem;">ゼミ・コラボ・ラーメンの話、なんでも。</p>
-      <div class="contact-links">
-        <a href="https://github.com/taisei-kato-ncu" class="contact-link" target="_blank" rel="noopener">
-          <i class="fab fa-github"></i> GitHub
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <span class="footer-logo">Kato Tai Times</span>
-    <span>&copy; 2026 Kato Tai &nbsp;·&nbsp; 🐹 おすし監修</span>
-  </div>
-</footer>
+<footer>&copy; 2026 Kato Tai &nbsp;·&nbsp; 🐹 おすし監修</footer>
 
 <script>
-  // NAV scroll
-  const navbar = document.querySelector('nav');
-  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
-
-  // Hamburger
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-  });
-  document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-  }));
-
-  // Date
   const d = new Date();
-  document.getElementById('hero-date').textContent = d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
-
-  // Travel accordion
-  function toggleCountry(btn) {
-    btn.closest('.country-item').classList.toggle('open');
-  }
-
-  // Scroll reveal
+  document.getElementById('hdate').textContent = d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
   const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>

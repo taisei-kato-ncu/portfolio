@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap');
+
+:root {
+  --ink: #111111;
+  --ink2: #222222;
+  --paper: #d6d0c4;
+  --paper2: #ccc6b8;
+  --paper3: #c0bab0;
+  --rule: #9a9080;
+  --rule-dark: #6b6050;
+  --accent: #8b1a1a;
+  --muted: #4a4035;
+  --font-h: 'Noto Serif JP', serif;
+  --font-b: 'Noto Serif JP', serif;
+  --font-mono: 'Source Code Pro', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-b); font-size: 15px; line-height: 1.9; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+
+/* ── HEADER ── */
+header {
+  background: var(--paper2);
+  border-bottom: 3px double var(--ink);
+}
+.header-top {
+  max-width: 960px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.site-title {
+  font-family: var(--font-h); font-weight: 900;
+  font-size: 1.4rem; letter-spacing: 0.12em; color: var(--ink);
+}
+.header-date { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); }
+nav {
+  max-width: 960px; margin: 0 auto;
+  display: flex; padding: 0 24px;
+}
+nav a {
+  display: block; padding: 10px 18px;
+  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  border-right: 1px solid var(--rule);
+  transition: background 0.15s, color 0.15s;
+}
+nav a:first-child { border-left: 1px solid var(--rule); }
+nav a:hover, nav a.active { background: var(--ink); color: var(--paper); }
+
+/* ── MAIN ── */
+main { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* ── PAGE TITLE ── */
+.page-title {
+  font-family: var(--font-h); font-size: 2rem; font-weight: 900;
+  border-bottom: 3px double var(--ink); padding-bottom: 12px; margin-bottom: 36px;
+  letter-spacing: 0.05em;
+}
+.page-title span { font-size: 0.75rem; font-family: var(--font-mono); color: var(--muted); margin-left: 16px; font-weight: 400; letter-spacing: 0.1em; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink); border-top: 3px double var(--paper2);
+  text-align: center; padding: 20px 24px;
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--rule);
+}
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── COMMON TAGS ── */
+.tag { font-size: 0.7rem; padding: 2px 8px; border: 1px solid var(--rule-dark); color: var(--muted); font-family: var(--font-mono); }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Band | Kato Tai Times</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .band-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .band-card { padding: 24px; background: var(--paper2); border: 1px solid var(--rule); }
+    .band-card h3 { font-family: var(--font-h); font-size: 1rem; font-weight: 700; margin-bottom: 12px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+    .band-card p { font-size: 0.88rem; color: var(--ink2); }
+    .band-sub { font-size: 0.78rem; color: var(--muted); margin-top: 6px; }
+    .item-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .item-list li { font-size: 0.85rem; color: var(--ink2); padding-left: 12px; border-left: 2px solid var(--rule-dark); }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="site-title">Kato Tai Times</div>
+    <div class="header-date" id="hdate"></div>
+  </div>
+  <nav>
+    <a href="index.html">Top</a>
+    <a href="seminar.html">Seminar</a>
+    <a href="ramen.html">Ramen</a>
+    <a href="band.html" class="active">Band</a>
+    <a href="travel.html">Travel</a>
+  </nav>
+</header>
+
+<main>
+  <h1 class="page-title">Band <span>バンド活動</span></h1>
+
+  <div class="band-grid reveal">
+    <div class="band-card">
+      <h3>🎸 担当パート</h3>
+      <p>ギター（メイン）・ベース</p>
+      <p class="band-sub">機材沼に片足突っ込んでる</p>
+    </div>
+    <div class="band-card">
+      <h3>🎵 やった曲リスト</h3>
+      <ul class="item-list">
+        <li>準備中…</li>
+      </ul>
+    </div>
+    <div class="band-card">
+      <h3>🎛️ 機材</h3>
+      <ul class="item-list">
+        <li>準備中…</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer>&copy; 2026 Kato Tai &nbsp;·&nbsp; 🐹 おすし監修</footer>
+<script>
+  const d = new Date();
+  document.getElementById('hdate').textContent = d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

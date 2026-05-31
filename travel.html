@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel | Kato Tai Times</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .country-list { display: flex; flex-direction: column; gap: 10px; }
+    .country-item { background: var(--paper2); border: 1px solid var(--rule); overflow: hidden; }
+    .country-btn { width: 100%; display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: none; border: none; cursor: pointer; text-align: left; transition: background 0.15s; }
+    .country-btn:hover { background: var(--paper3); }
+    .future-btn { cursor: default; opacity: 0.5; }
+    .c-flag { font-size: 1.6rem; }
+    .c-name { font-family: var(--font-h); font-size: 1rem; font-weight: 700; flex: 1; }
+    .c-status { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border: 1px solid; }
+    .c-status.done { color: var(--accent); border-color: var(--accent); }
+    .c-status.planned { color: var(--muted); border-color: var(--rule-dark); }
+    .c-arrow { font-size: 0.7rem; color: var(--muted); transition: transform 0.3s; }
+    .country-item.open .c-arrow { transform: rotate(180deg); }
+    .country-photos { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .country-item.open .country-photos { max-height: 2000px; }
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; padding: 0 12px 12px; }
+    .photo-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; transition: transform 0.2s; cursor: pointer; }
+    .photo-grid img:hover { transform: scale(1.04); }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="site-title">Kato Tai Times</div>
+    <div class="header-date" id="hdate"></div>
+  </div>
+  <nav>
+    <a href="index.html">Top</a>
+    <a href="seminar.html">Seminar</a>
+    <a href="ramen.html">Ramen</a>
+    <a href="band.html">Band</a>
+    <a href="travel.html" class="active">Travel</a>
+  </nav>
+</header>
+
+<main>
+  <h1 class="page-title">Travel <span>海外記録</span></h1>
+  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:28px;">世界一周計画進行中。クリックで写真を見る。</p>
+
+  <div class="country-list reveal">
+    <div class="country-item">
+      <button class="country-btn" onclick="toggleCountry(this)">
+        <span class="c-flag">🇵🇭</span>
+        <span class="c-name">フィリピン・セブ島</span>
+        <span class="c-status done">渡航済み</span>
+        <span class="c-arrow">▼</span>
+      </button>
+      <div class="country-photos">
+        <div class="photo-grid">
+          <img src="セブ島/S__165748744_0.jpg" alt="セブ島">
+          <img src="セブ島/S__165748745_0.jpg" alt="セブ島">
+          <img src="セブ島/S__165748746_0.jpg" alt="セブ島">
+          <img src="セブ島/S__165748747_0.jpg" alt="セブ島">
+          <img src="セブ島/S__165748748_0.jpg" alt="セブ島">
+          <img src="セブ島/S__165748749_0.jpg" alt="セブ島">
+          <img src="セブ島/S__165748750_0.jpg" alt="セブ島">
+          <img src="セブ島/S__165748751_0.jpg" alt="セブ島">
+          <img src="セブ島/S__165748752_0.jpg" alt="セブ島">
+          <img src="セブ島/S__165748753_0.jpg" alt="セブ島">
+        </div>
+      </div>
+    </div>
+    <div class="country-item">
+      <button class="country-btn future-btn" disabled>
+        <span class="c-flag">🌍</span>
+        <span class="c-name">次の渡航先</span>
+        <span class="c-status planned">計画中</span>
+      </button>
+    </div>
+  </div>
+</main>
+
+<footer>&copy; 2026 Kato Tai &nbsp;·&nbsp; 🐹 おすし監修</footer>
+<script>
+  const d = new Date();
+  document.getElementById('hdate').textContent = d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+  function toggleCountry(btn) { btn.closest('.country-item').classList.toggle('open'); }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
