@@ -226,6 +226,22 @@
 
     /* TRAVEL */
     #travel { background: var(--bg3); }
+    .travel-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+    .travel-header .travel-flag { font-size: 2rem; }
+    .travel-header h3 { font-family: var(--font-h); font-size: 1.2rem; font-weight: 700; }
+    .travel-header p { font-size: 0.85rem; color: var(--muted); }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .photo-grid img {
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+      border-radius: 4px; transition: transform 0.25s, opacity 0.25s;
+      cursor: pointer;
+    }
+    .photo-grid img:hover { transform: scale(1.03); opacity: 0.9; }
+    .travel-add { margin-top: 20px; }
     .travel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
     .travel-card {
       background: var(--bg2); border: 1px solid var(--border); border-radius: 4px;
@@ -504,15 +520,25 @@
       <p class="section-label">Travel</p>
       <h2 class="section-title">海外記録。</h2>
     </div>
-    <div class="travel-grid reveal">
-      <div class="travel-card">
+    <div class="reveal">
+      <div class="travel-header">
         <div class="travel-flag">🇵🇭</div>
-        <h3>フィリピン</h3>
-        <p class="travel-memo">渡航済み。詳細・写真は追記予定。</p>
+        <div>
+          <h3>フィリピン・セブ島</h3>
+          <p>渡航済み</p>
+        </div>
       </div>
-      <div class="travel-card add-card">
-        <div style="font-size:2rem;margin-bottom:8px;">＋</div>
-        <p>次の渡航先</p>
+      <div class="photo-grid">
+        <img src="セブ島/S__165748744_0.jpg" alt="セブ島">
+        <img src="セブ島/S__165748745_0.jpg" alt="セブ島">
+        <img src="セブ島/S__165748746_0.jpg" alt="セブ島">
+        <img src="セブ島/S__165748747_0.jpg" alt="セブ島">
+        <img src="セブ島/S__165748748_0.jpg" alt="セブ島">
+        <img src="セブ島/S__165748749_0.jpg" alt="セブ島">
+        <img src="セブ島/S__165748750_0.jpg" alt="セブ島">
+        <img src="セブ島/S__165748751_0.jpg" alt="セブ島">
+        <img src="セブ島/S__165748752_0.jpg" alt="セブ島">
+        <img src="セブ島/S__165748753_0.jpg" alt="セブ島">
       </div>
     </div>
   </div>
