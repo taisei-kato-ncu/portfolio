@@ -6,24 +6,24 @@
   <title>KATO TAI TIMES</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=UnifrakturMaguntia&family=Noto+Serif+JP:wght@400;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
-      --ink: #1a1008;
-      --ink2: #2d2416;
-      --paper: #f5f0e8;
-      --paper2: #ede8d8;
-      --paper3: #faf7f0;
-      --rule: #c8b89a;
-      --rule-dark: #8a7560;
+      --ink: #111111;
+      --ink2: #222222;
+      --paper: #d6d0c4;
+      --paper2: #ccc6b8;
+      --paper3: #c8c2b4;
+      --rule: #9a9080;
+      --rule-dark: #6b6050;
       --accent: #8b1a1a;
       --accent2: #c0392b;
-      --muted: #6b5d4f;
-      --font-head: 'Playfair Display', 'Noto Serif JP', serif;
+      --muted: #4a4035;
+      --font-head: 'Noto Serif JP', serif;
       --font-body: 'Noto Serif JP', serif;
       --font-mono: 'Source Code Pro', monospace;
-      --font-frak: 'UnifrakturMaguntia', cursive;
+      --font-frak: 'Noto Serif JP', serif;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -44,7 +44,7 @@
       display: flex; align-items: center; justify-content: space-between;
       height: 52px;
     }
-    .nav-logo { font-family: var(--font-frak); font-size: 1.5rem; color: var(--ink); letter-spacing: 0.02em; }
+    .nav-logo { font-family: var(--font-head); font-weight: 900; font-size: 1.1rem; color: var(--ink); letter-spacing: 0.1em; }
     .nav-links { display: flex; gap: 0; list-style: none; }
     .nav-links li { border-left: 1px solid var(--rule); }
     .nav-links li:last-child { border-right: 1px solid var(--rule); }
@@ -88,11 +88,12 @@
       max-width: 1100px; margin: 0 auto;
     }
     .masthead-title {
-      font-family: var(--font-frak);
-      font-size: clamp(3rem, 8vw, 6rem);
+      font-family: var(--font-head);
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 900;
       color: var(--ink);
       line-height: 1;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.15em;
     }
     .masthead-sub {
       font-family: var(--font-mono);
@@ -253,7 +254,7 @@
     /* ── FOOTER ── */
     footer { background: var(--ink); border-top: 3px double var(--paper2); padding: 20px 32px; }
     .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 0.75rem; color: var(--rule); }
-    .footer-logo { font-family: var(--font-frak); font-size: 1.1rem; color: var(--paper2); }
+    .footer-logo { font-family: var(--font-head); font-size: 1rem; font-weight: 900; color: var(--paper2); letter-spacing: 0.1em; }
   </style>
 </head>
 <body>
