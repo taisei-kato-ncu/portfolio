@@ -129,7 +129,9 @@
       background: linear-gradient(135deg, #fde68a, #f59e0b);
       display: flex; align-items: center; justify-content: center;
       font-size: 2rem; flex-shrink: 0;
+      overflow: hidden;
     }
+    .pet-placeholder img { width: 100%; height: 100%; object-fit: cover; }
     .pet-info .pet-name { font-family: var(--font-h); font-weight: 700; font-size: 1rem; }
     .pet-info .pet-desc { font-size: 0.85rem; color: var(--muted); }
     .about-facts { display: flex; flex-direction: column; gap: 20px; }
@@ -304,7 +306,7 @@
         <p>今はコーディングを学びながらポートフォリオサイトを作ったりアプリを改造したりしている。今後は作品制作や産学連携にも挑戦予定。</p>
         <p>趣味は<strong>次郎系ラーメン</strong>の食べ歩き、<strong>バンド（ギター・ベース）</strong>、そして海外ふらっと行くやつ。</p>
         <div class="about-pet">
-          <div class="pet-placeholder">🐹</div>
+          <div class="pet-placeholder"><img src="おすし写真.png" alt="おすし"></div>
           <div class="pet-info">
             <div class="pet-name">おすし</div>
             <div class="pet-desc">ハムスター / 最近の推し / 名前のセンスには自信あり</div>
