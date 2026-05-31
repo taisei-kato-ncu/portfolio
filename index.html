@@ -226,31 +226,27 @@
 
     /* TRAVEL */
     #travel { background: var(--bg3); }
-    .travel-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
-    .travel-header .travel-flag { font-size: 2rem; }
-    .travel-header h3 { font-family: var(--font-h); font-size: 1.2rem; font-weight: 700; }
-    .travel-header p { font-size: 0.85rem; color: var(--muted); }
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 12px;
+    .country-list { display: flex; flex-direction: column; gap: 12px; }
+    .country-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+    .country-btn {
+      width: 100%; display: flex; align-items: center; gap: 16px;
+      padding: 20px 24px; background: none; border: none; cursor: pointer;
+      text-align: left; transition: background 0.2s;
     }
-    .photo-grid img {
-      width: 100%; aspect-ratio: 1; object-fit: cover;
-      border-radius: 4px; transition: transform 0.25s, opacity 0.25s;
-      cursor: pointer;
-    }
-    .photo-grid img:hover { transform: scale(1.03); opacity: 0.9; }
-    .travel-add { margin-top: 20px; }
-    .travel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-    .travel-card {
-      background: var(--bg2); border: 1px solid var(--border); border-radius: 4px;
-      padding: 32px 24px; text-align: center; transition: transform 0.25s;
-    }
-    .travel-card:hover { transform: translateY(-4px); }
-    .travel-flag { font-size: 3rem; margin-bottom: 12px; }
-    .travel-card h3 { font-family: var(--font-h); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-    .travel-memo { font-size: 0.85rem; color: var(--muted); }
+    .country-btn:hover { background: var(--bg3); }
+    .future-btn { cursor: default; opacity: 0.5; }
+    .c-flag { font-size: 1.8rem; }
+    .c-name { font-family: var(--font-h); font-size: 1rem; font-weight: 700; flex: 1; }
+    .c-status { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+    .c-status.done { background: rgba(37,99,235,0.1); color: var(--primary); border: 1px solid rgba(37,99,235,0.2); }
+    .c-status.planned { background: rgba(100,116,139,0.1); color: var(--muted); border: 1px solid var(--border); }
+    .c-arrow { font-size: 0.75rem; color: var(--muted); transition: transform 0.3s; }
+    .country-item.open .c-arrow { transform: rotate(180deg); }
+    .country-photos { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .country-item.open .country-photos { max-height: 2000px; }
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; padding: 0 16px 16px; }
+    .photo-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; transition: transform 0.25s; cursor: pointer; }
+    .photo-grid img:hover { transform: scale(1.04); }
 
     /* CONTACT */
     #contact { background: var(--dark); text-align: center; padding: 100px 24px; }
@@ -519,27 +515,43 @@
     <div class="reveal">
       <p class="section-label">Travel</p>
       <h2 class="section-title">海外記録。</h2>
+      <p style="color:var(--muted);margin-top:-32px;margin-bottom:40px;font-size:0.95rem;">世界一周計画進行中。クリックで写真を見る。</p>
     </div>
-    <div class="reveal">
-      <div class="travel-header">
-        <div class="travel-flag">🇵🇭</div>
-        <div>
-          <h3>フィリピン・セブ島</h3>
-          <p>渡航済み</p>
+    <div class="country-list reveal">
+
+      <!-- フィリピン -->
+      <div class="country-item">
+        <button class="country-btn" onclick="toggleCountry(this)">
+          <span class="c-flag">🇵🇭</span>
+          <span class="c-name">フィリピン・セブ島</span>
+          <span class="c-status done">渡航済み</span>
+          <span class="c-arrow">▼</span>
+        </button>
+        <div class="country-photos">
+          <div class="photo-grid">
+            <img src="セブ島/S__165748744_0.jpg" alt="セブ島">
+            <img src="セブ島/S__165748745_0.jpg" alt="セブ島">
+            <img src="セブ島/S__165748746_0.jpg" alt="セブ島">
+            <img src="セブ島/S__165748747_0.jpg" alt="セブ島">
+            <img src="セブ島/S__165748748_0.jpg" alt="セブ島">
+            <img src="セブ島/S__165748749_0.jpg" alt="セブ島">
+            <img src="セブ島/S__165748750_0.jpg" alt="セブ島">
+            <img src="セブ島/S__165748751_0.jpg" alt="セブ島">
+            <img src="セブ島/S__165748752_0.jpg" alt="セブ島">
+            <img src="セブ島/S__165748753_0.jpg" alt="セブ島">
+          </div>
         </div>
       </div>
-      <div class="photo-grid">
-        <img src="セブ島/S__165748744_0.jpg" alt="セブ島">
-        <img src="セブ島/S__165748745_0.jpg" alt="セブ島">
-        <img src="セブ島/S__165748746_0.jpg" alt="セブ島">
-        <img src="セブ島/S__165748747_0.jpg" alt="セブ島">
-        <img src="セブ島/S__165748748_0.jpg" alt="セブ島">
-        <img src="セブ島/S__165748749_0.jpg" alt="セブ島">
-        <img src="セブ島/S__165748750_0.jpg" alt="セブ島">
-        <img src="セブ島/S__165748751_0.jpg" alt="セブ島">
-        <img src="セブ島/S__165748752_0.jpg" alt="セブ島">
-        <img src="セブ島/S__165748753_0.jpg" alt="セブ島">
+
+      <!-- 今後追加用プレースホルダー -->
+      <div class="country-item">
+        <button class="country-btn future-btn" disabled>
+          <span class="c-flag">🌍</span>
+          <span class="c-name">次の渡航先</span>
+          <span class="c-status planned">計画中</span>
+        </button>
       </div>
+
     </div>
   </div>
 </section>
@@ -589,6 +601,11 @@
     heroGlow.style.left = (e.clientX - r.left) + 'px';
     heroGlow.style.top  = (e.clientY - r.top)  + 'px';
   });
+
+  // Travel accordion
+  function toggleCountry(btn) {
+    btn.closest('.country-item').classList.toggle('open');
+  }
 
   // Scroll reveal
   const observer = new IntersectionObserver(entries => {
