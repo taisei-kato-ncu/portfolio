@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>🐹 ハムスターぐにゃぐにゃゲーム</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #5c94fc; overflow: hidden; }
+  canvas { display: block; }
+  #ui { position: fixed; top: 12px; left: 12px; color: #fff; font: bold 16px sans-serif; text-shadow: 2px 2px #000; }
+</style>
+</head>
+<body>
+<div id="ui">🐹 ← → で移動 / スペースでジャンプ</div>
+<canvas id="c"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script>
+const { Engine, Render, Runner, Bodies, Body, World, Events, Composite } = Matter;
+
+const W = window.innerWidth, H = window.innerHeight;
+const canvas = document.getElementById('c');
+canvas.width = W; canvas.height = H;
+const ctx = canvas.getContext('2d');
+
+// --- 物理エンジン ---
+const engine = Engine.create({ gravity: { y: 2 } });
+const world = engine.world;
+
+// --- ハムスター（ぐにゃぐにゃ = 複数の円をバネで繋いだソフトボディ） ---
+const PLAYER_X = 200, PLAYER_Y = 300;
+const R = 18; // 各パーティクルの半径
+// 中心 + 周囲6点で構成
+const offsets = [
+  [0, 0],
+  [R*1.2, 0], [-R*1.2, 0],
+  [0, R*1.2], [0, -R*1.2],
+  [R*0.8, R*0.8], [-R*0.8, R*0.8],
+];
+const particles = offsets.map(([ox, oy]) =>
+  Bodies.circle(PLAYER_X + ox, PLAYER_Y + oy, R, {
+    frictionAir: 0.05, restitution: 0.3, friction: 0.5,
+    collisionFilter: { category: 0x0002, mask: 0x0001 }
+  })
+);
+// 中心パーティクル（コリジョン有効）
+const center = Bodies.circle(PLAYER_X, PLAYER_Y, R * 1.5, {
+  frictionAir: 0.05, restitution: 0.2, friction: 0.8,
+  collisionFilter: { category: 0x0002, mask: 0x0001 },
+  label: 'player'
+});
+
+// バネで全粒子を中心に繋ぐ
+const constraints = [];
+[...particles, ...particles].forEach((p, i) => {
+  if (i < particles.length) {
+    constraints.push(Matter.Constraint.create({
+      bodyA: center, bodyB: p,
+      stiffness: 0.08, damping: 0.1,
+      length: R * 1.5
+    }));
+  }
+});
+// 隣接粒子同士も繋ぐ
+for (let i = 0; i < particles.length; i++) {
+  for (let j = i + 1; j < particles.length; j++) {
+    constraints.push(Matter.Constraint.create({
+      bodyA: particles[i], bodyB: particles[j],
+      stiffness: 0.04, damping: 0.05,
+      length: R * 2.0
+    }));
+  }
+}
+
+World.add(world, [...particles, center, ...constraints]);
+
+// --- ステージ ---
+const groundY = H + 300; // ワールド座標での地面Y（スクロールで調整）
+const stageData = [
+  // [x, y, w, h, type]  type: 'ground'|'block'|'pipe'
+  // 地面
+  { x: 1000, y: 580, w: 2000, h: 40, type: 'ground' },
+  { x: 3500, y: 580, w: 2000, h: 40, type: 'ground' },
+  { x: 6000, y: 580, w: 2000, h: 40, type: 'ground' },
+  // 浮きブロック
+  { x: 600,  y: 400, w: 120, h: 30, type: 'block' },
+  { x: 800,  y: 340, w: 120, h: 30, type: 'block' },
+  { x: 1100, y: 300, w: 180, h: 30, type: 'block' },
+  { x: 1500, y: 380, w: 120, h: 30, type: 'block' },
+  { x: 1800, y: 320, w: 120, h: 30, type: 'block' },
+  { x: 2200, y: 360, w: 200, h: 30, type: 'block' },
+  { x: 2700, y: 300, w: 120, h: 30, type: 'block' },
+  { x: 3000, y: 350, w: 120, h: 30, type: 'block' },
+  { x: 3600, y: 380, w: 200, h: 30, type: 'block' },
+  { x: 4100, y: 320, w: 120, h: 30, type: 'block' },
+  { x: 4500, y: 280, w: 180, h: 30, type: 'block' },
+  // 土管
+  { x: 700,  y: 515, w: 80, h: 130, type: 'pipe' },
+  { x: 1400, y: 495, w: 80, h: 170, type: 'pipe' },
+  { x: 2500, y: 490, w: 80, h: 180, type: 'pipe' },
+  { x: 3300, y: 505, w: 80, h: 150, type: 'pipe' },
+  { x: 4300, y: 480, w: 80, h: 200, type: 'pipe' },
+  { x: 5200, y: 490, w: 80, h: 180, type: 'pipe' },
+];
+
+const staticBodies = stageData.map(s =>
+  Bodies.rectangle(s.x, s.y, s.w, s.h, {
+    isStatic: true, label: s.type,
+    collisionFilter: { category: 0x0001, mask: 0x0002 },
+    friction: 0.5
+  })
+);
+World.add(world, staticBodies);
+
+// --- ハムスター画像 ---
+const hamsterImg = new Image();
+hamsterImg.src = 'おすし写真.png';
+
+// --- キー入力 ---
+const keys = {};
+window.addEventListener('keydown', e => { keys[e.code] = true; e.preventDefault(); });
+window.addEventListener('keyup', e => { keys[e.code] = false; });
+
+// 接地判定
+let onGround = false;
+Events.on(engine, 'collisionStart', e => {
+  e.pairs.forEach(pair => {
+    if (pair.bodyA === center || pair.bodyB === center ||
+        particles.includes(pair.bodyA) || particles.includes(pair.bodyB)) {
+      onGround = true;
+    }
+  });
+});
+
+// --- ゲームループ ---
+const runner = Runner.create();
+Runner.run(runner, engine);
+
+let cameraX = 0, cameraY = 0;
+
+function loop() {
+  requestAnimationFrame(loop);
+
+  // キー操作（中心ボディに力を加える）
+  const spd = 0.004;
+  if (keys['ArrowLeft']  || keys['KeyA']) Body.applyForce(center, center.position, { x: -spd, y: 0 });
+  if (keys['ArrowRight'] || keys['KeyD']) Body.applyForce(center, center.position, { x:  spd, y: 0 });
+  if ((keys['Space'] || keys['ArrowUp'] || keys['KeyW']) && onGround) {
+    Body.applyForce(center, center.position, { x: 0, y: -0.25 });
+    onGround = false;
+  }
+  // 速度制限
+  const maxSpd = 8;
+  if (Math.abs(center.velocity.x) > maxSpd)
+    Body.setVelocity(center, { x: Math.sign(center.velocity.x) * maxSpd, y: center.velocity.y });
+
+  // カメラ（中心ボディを追う、スムーズ）
+  const targetX = center.position.x - W / 3;
+  const targetY = center.position.y - H / 2;
+  cameraX += (targetX - cameraX) * 0.1;
+  cameraY += (targetY - cameraY) * 0.1;
+
+  // 描画
+  ctx.clearRect(0, 0, W, H);
+
+  // 背景グラデーション（空）
+  const sky = ctx.createLinearGradient(0, 0, 0, H);
+  sky.addColorStop(0, '#5c94fc');
+  sky.addColorStop(1, '#8bb8ff');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.save();
+  ctx.translate(-cameraX, -cameraY);
+
+  // ステージ描画
+  stageData.forEach((s, i) => {
+    const b = staticBodies[i];
+    const bx = b.position.x - s.w / 2;
+    const by = b.position.y - s.h / 2;
+    if (s.type === 'ground') {
+      // 草ブロック
+      ctx.fillStyle = '#e8b04b';
+      ctx.fillRect(bx, by + 10, s.w, s.h - 10);
+      ctx.fillStyle = '#5ba832';
+      ctx.fillRect(bx, by, s.w, 12);
+    } else if (s.type === 'block') {
+      ctx.fillStyle = '#c47c2b';
+      ctx.fillRect(bx, by, s.w, s.h);
+      ctx.fillStyle = '#e8a045';
+      ctx.fillRect(bx + 2, by + 2, s.w - 4, 8);
+      ctx.strokeStyle = '#8b5200';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(bx, by, s.w, s.h);
+    } else if (s.type === 'pipe') {
+      // 土管
+      ctx.fillStyle = '#4a9e20';
+      ctx.fillRect(bx + 4, by + 20, s.w - 8, s.h - 20);
+      ctx.fillStyle = '#5cb82a';
+      ctx.fillRect(bx, by, s.w, 22);
+      ctx.strokeStyle = '#2d6010';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(bx, by, s.w, 22);
+      ctx.strokeRect(bx + 4, by + 20, s.w - 8, s.h - 20);
+    }
+  });
+
+  // ぐにゃぐにゃキャラクター描画
+  // 全パーティクルの重心を求める
+  const allBodies = [...particles, center];
+  const cx = allBodies.reduce((s, b) => s + b.position.x, 0) / allBodies.length;
+  const cy = allBodies.reduce((s, b) => s + b.position.y, 0) / allBodies.length;
+  const bodyRadius = R * 2.8;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(center.angle);
+
+  // ぐにゃぐにゃ変形をclipPathで表現
+  ctx.beginPath();
+  // パーティクル位置から変形した輪郭を描く
+  const pts = particles.map(p => ({
+    x: p.position.x - cx,
+    y: p.position.y - cy
+  }));
+  // 凸包っぽく並べてスムーズな曲線に
+  pts.sort((a, b) => Math.atan2(a.y, a.x) - Math.atan2(b.y, b.x));
+  if (pts.length > 0) {
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) {
+      const prev = pts[i - 1], curr = pts[i], next = pts[(i + 1) % pts.length];
+      const cpx = (prev.x + curr.x) / 2;
+      const cpy = (prev.y + curr.y) / 2;
+      ctx.quadraticCurveTo(prev.x, prev.y, cpx, cpy);
+    }
+    ctx.closePath();
+  }
+  ctx.clip();
+
+  // ハムスター画像を描画
+  const size = bodyRadius * 2.5;
+  if (hamsterImg.complete && hamsterImg.naturalWidth > 0) {
+    ctx.drawImage(hamsterImg, -size / 2, -size / 2, size, size);
+  } else {
+    // フォールバック: 茶色の丸
+    ctx.fillStyle = '#c8965a';
+    ctx.beginPath();
+    ctx.arc(0, 0, bodyRadius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = `${bodyRadius}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('🐹', 0, 0);
+  }
+  ctx.restore();
+
+  // 落下リセット
+  if (center.position.y > 900) {
+    Body.setPosition(center, { x: 200, y: 300 });
+    Body.setVelocity(center, { x: 0, y: 0 });
+    particles.forEach(p => {
+      Body.setPosition(p, { x: 200 + (Math.random()-0.5)*40, y: 300 + (Math.random()-0.5)*40 });
+      Body.setVelocity(p, { x: 0, y: 0 });
+    });
+  }
+
+  ctx.restore();
+}
+
+loop();
+</script>
+</body>
+</html>

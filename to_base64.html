@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>画像 → base64変換</title>
+<style>
+  body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+  #drop { border: 3px dashed #aaa; border-radius: 12px; padding: 40px; text-align: center; cursor: pointer; color: #666; }
+  #drop.over { border-color: #4a90e2; background: #eef5ff; }
+  textarea { width: 100%; height: 120px; margin-top: 16px; font-size: 11px; }
+  button { margin-top: 8px; padding: 10px 24px; font-size: 16px; cursor: pointer; }
+  #result { display: none; }
+  #msg { color: green; font-weight: bold; margin-top: 8px; }
+</style>
+</head>
+<body>
+<h2>🐹 画像 → base64変換ツール</h2>
+<p>remove.bg で背景を透過した画像をここにドロップ（または選択）してください。</p>
+
+<div id="drop" onclick="document.getElementById('file').click()">
+  ここに画像をドラッグ&amp;ドロップ<br>またはクリックして選択
+  <input type="file" id="file" accept="image/*" style="display:none">
+</div>
+
+<div id="result">
+  <textarea id="b64" readonly></textarea>
+  <br>
+  <button onclick="copyB64()">📋 コピー</button>
+  <div id="msg"></div>
+  <p style="color:#888;font-size:13px">この文字列全体を <code>hamster_override.js</code> の <code>YOUR_BASE64_HERE</code> と差し替えてください。</p>
+</div>
+
+<script>
+  const drop = document.getElementById('drop');
+  const fileInput = document.getElementById('file');
+
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+  drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); loadFile(e.dataTransfer.files[0]); });
+  fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+
+  function loadFile(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('b64').value = e.target.result;
+      document.getElementById('result').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function copyB64() {
+    const ta = document.getElementById('b64');
+    ta.select();
+    navigator.clipboard.writeText(ta.value).then(() => {
+      document.getElementById('msg').textContent = 'コピーしました！';
+      setTimeout(() => document.getElementById('msg').textContent = '', 2000);
+    });
+  }
+</script>
+</body>
+</html>
